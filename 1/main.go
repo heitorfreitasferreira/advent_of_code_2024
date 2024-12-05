@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"slices"
 	"strconv"
 	"strings"
 )
@@ -31,7 +30,6 @@ func main() {
 			panic("não consegui converter para int")
 		}
 
-		fmt.Println(v1, v2)
 		id1 = append(id1, v1)
 
 		id2 = append(id2, v2)
@@ -40,20 +38,33 @@ func main() {
 		panic(err)
 	}
 
-	slices.Sort(id1)
-	slices.Sort(id2)
-	totalDistance := 0
-	for i := 0; i < len(id1); i++ {
-		maior := id1[i]
-		menor := id2[i]
-		if id2[i] > id1[i] {
-			maior = id2[i]
-			menor = id1[i]
-		}
-		totalDistance += maior - menor
-	}
-	fmt.Println(id1[:10])
-	fmt.Println(id2[:10])
+	// slices.Sort(id1)
+	// slices.Sort(id2)
+	// totalDistance := 0
+	// for i := 0; i < len(id1); i++ {
+	// 	maior := id1[i]
+	// 	menor := id2[i]
+	// 	if id2[i] > id1[i] {
+	// 		maior = id2[i]
+	// 		menor = id1[i]
+	// 	}
+	// 	totalDistance += maior - menor
+	// }
+	// fmt.Println(id1[:10])
+	// fmt.Println(id2[:10])
 
-	fmt.Println(totalDistance)
+	// fmt.Println(totalDistance) // 2344935
+
+	frequency := make(map[int]int)
+
+	for _, v := range id2 {
+		frequency[v]++
+	}
+
+	total := 0
+	for _, id := range id1 {
+		total += id * frequency[id]
+	}
+
+	fmt.Println(total)
 }
