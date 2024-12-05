@@ -50,10 +50,35 @@ func main() {
 		line := scanner.Text()
 		report := parseLine(line)
 		another := processesReport(report)
+		if another == 0 {
+			for i := 0; i < len(report); i++ {
+				reportWithoutIesim := removeIPos(i, report)
+				if try := processesReport(reportWithoutIesim); try == 1 {
+					another = 1
+					break
+				}
+			}
+		}
 		total += another
 	}
 	if err := scanner.Err(); err != nil {
 		panic(err)
 	}
 	fmt.Println(total)
+	test := []int{0, 1, 2, 3, 4}
+	for i := range len(test) {
+		heyyy := removeIPos(i, test)
+		fmt.Println(heyyy)
+	}
+}
+
+func removeIPos(pos int, arr []int) []int {
+	returnable := []int{}
+	for i, v := range arr {
+		if pos == i {
+			continue
+		}
+		returnable = append(returnable, v)
+	}
+	return returnable
 }
